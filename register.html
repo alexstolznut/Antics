@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./examples/cover.css" rel="stylesheet">
+	<link href="./examples/bs.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+  <script>
+  var myDataRef = new Firebase('https://antics.firebaseio.com/Users');
+  $(window).on('hashchange', function() {
+			var tag = window.location.hash.substr(1);
+			myDataRef.child(tag).once("value", function(snapshot) {
+				tag = snapshot.val();
+				
+				if(tag!== null)
+				{
+				if(tag.ID !== null)
+				{
+				alert(tag.ID);
+				alert("USER EXISTS ALREADY");
+				document.location.href="./register.html";
+				}
+				}
+				else
+				{
+				var password = $('#pass').val().toLowerCase().trim();
+				var cpassword = $('#cpass').val().toLowerCase().trim();
+				if(cpassword === password)
+				{
+				var entry = myDataRef.child($('#login').val().trim());
+				var ID = $('#login').val().trim();
+				var email = $('#email').val();
+				var password = $('#pass').val().toLowerCase().trim();
+				entry.set({ID: ID, email: email,password: password});
+				alert("Your data has been successfully added for " + name);
+				document.location.href="./Category.html";
+				}
+				else
+				{
+				alert("Your passwords do not match");
+				document.location.href="./register.html";
+				}
+			  }
+			});
+		});
+  
+
+  
+  
+  </script>
+  </head>
+
+  <body background = "tree.jpg" style="background-size:cover">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid" style="background-color:#3770B6;">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a href="./Category.html" style="padding-top:5px;" class="navbar-brand" ><img src="./logi.png" alt="logo" height ="40" width = "75" ></a>
+        
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./Login.html" style="font-size: 16px;font-weight: bold;color:white">Login</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" style="font-size: 16px;font-weight: bold;color:white">Register</a></li>
+          </ul>
+          <div class="navbar-form navbar-right" >
+			<div class ="form-group">
+            <input autocomplete="on" list="autolist" id="search" type="text" class="form-control" placeholder="Search..."   onkeydown="if (event.keyCode == 13) document.location.href='./search.html#'+document.getElementById('search').value.toLowerCase()">
+			</div>
+          </div>
+
+		  <ul class="nav navbar-nav navbar-left ">
+            <li><a href="./Category.html#cat" style="font-size: 16px;
+  font-weight: bold;color:white">Clubs</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-left">
+            <li><a href="./Events.html" style="font-size: 16px;
+  font-weight: bold;color:white">Events</a></li>
+          </ul>
+		</div>
+      </div>
+    </nav>  
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          
+		  
+		  
+
+
+          <div class="inner cover">
+            
+            <p class="lead">
+			<form style="font-size:24px;" onsubmit="document.location.href='./register.html#'+document.getElementById('login').value; return false;">
+					Login<br>
+					<input id="login" type="text" style="color:black"required>
+						<br>
+					Email<br>
+				<input id="email" type="email" style="color:black" required>
+				<br>
+				Password<br>
+				<input id="pass" type="password" style="color:black" required >
+				<br>
+				Confirm Password<br>
+				<input id="cpass" type="password" style="color:black" required>
+				<br>
+				<br>
+				<input  type="submit" value="Register" class="btn btn-lg btn-default">
+			</form>
+
+			</p>
+
+          </div>
+
+
+
+        </div>
+		
+		
+
+		
+
+      </div>
+
+    </div>
+			  <datalist id ="autolist">
+
+</datalist>
+	
+<script>
+			var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+			myDataRef.orderByChild("name").on('child_added', function(snapshot) {
+				var tag = snapshot.val();
+				var element = document.getElementById("autolist");
+				element.innerHTML += "<option value="+ tag.name +">"; 
+			});
+
+
+
+</script>
+	
+	
+	<div  style="width:100%;background-size:100% 15%;background-repeat: no-repeat; 
+background-color:#3770B6;" class="mastfoot">
+            <div class="inner">
+			
+              		<a href="javascript:void(0)">&copy;Copyright</a> |
+					<a href="javascript:void(0)">Privacy Policy</a>
+            </div>
+          </div>
+
+		  
+		  
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./dist/js/bootstrap.min.js"></script>
+	<script>
+		  $("input").on("keydown", function (e) {
+    return e.which !== 32;
+});
+
+
+
+
+		  </script>
+  </body>
+</html>

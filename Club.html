@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Club</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./examples/dash.css" rel="stylesheet">
+	<link href="./examples/cover.css" rel="stylesheet">
+	<link href="./examples/bs.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+	<style>
+	#contact {padding:10px 10px}
+	p {font-size:14pt;font-family:monospace;text-indent:50px;}
+	table, td, th {border: 1px solid black;}
+	.group1 {height:300px}
+	#slide {width:100%}
+</style>
+
+
+
+
+
+<script>
+  var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+  $(window).on('hashchange', function() {
+			var tag = window.location.hash.substr(1);
+			myDataRef.child(tag).once("value", function(snapshot) {
+				tag = snapshot.val();
+				
+				if(tag!== null)
+				{
+					document.getElementById("title").innerHTML = (tag.name);
+					document.getElementById("Cdesc").innerHTML = (tag.description);
+					eventload(tag.name);
+				}
+				else
+				{
+				
+				}
+			  
+			});
+		});
+		
+		
+	 $(window).on('load', function() {
+			var tag = window.location.hash.substr(1);
+			myDataRef.child(tag).once("value", function(snapshot) {
+				tag = snapshot.val();
+				
+				if(tag!== null)
+				{
+					document.getElementById("title").innerHTML = (tag.name);
+					document.getElementById("Cdesc").innerHTML = (tag.description);
+					eventload(tag.name);
+					
+					
+					
+
+				}
+				else
+				{
+				
+				}
+			  
+			});
+		});
+  
+  
+function eventload(tag) {
+  var usersRef = new Firebase('hhttps://antics.firebaseio.com/Events');
+  usersRef.once('value', function(snapshot) {
+  var arr = [];
+  
+	snapshot.forEach(function(childSnapshot){
+	
+	var test = childSnapshot.child('name').val();
+    if(test.indexOf(tag) > -1)
+	{
+	var date = childSnapshot.val().when;
+	var b = date.split(/\D+/);
+    var r =  new Date(b[0], --b[1], b[2], b[3], b[4], b[5]||0, b[6]||0);
+	var eventdate = r.toLocaleDateString() + " " + r.toLocaleTimeString();
+	
+	document.getElementById("inputevent").innerHTML += "<tr><td style='text-transform:capitalize'>"+ childSnapshot.val().name+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().eventname+"</td><td>"+ childSnapshot.val().description+"</td><td>"+eventdate+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().where+"</td></tr>";
+	}
+	else
+	{
+	}
+	});
+	
+		
+
+  });
+}
+  
+  
+  
+  </script>
+
+
+
+  </head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid" style="background-color:#3770B6">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="./Category.html" style="cursor:pointer;cursor:hand;padding-top:5px;" class="navbar-brand" ><img src="./logi.png" alt="logo" height ="40" width = "75" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./Login.html" style="font-size: 16px;font-weight: bold;color:white">Login</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-right">
+            <li><a href="./register.html" style="font-size: 16px;font-weight: bold;color:white">Register</a></li>
+          </ul>
+          <div class="navbar-form navbar-right" >
+			<div class ="form-group">
+            <input autocomplete="on" list="autolist" id="search" type="text" class="form-control" placeholder="Search..."   onkeydown="if (event.keyCode == 13) document.location.href='./search.html#'+document.getElementById('search').value.toLowerCase()">
+			</div>
+          </div>
+
+		  <ul class="nav navbar-nav navbar-left ">
+            <li><a href="./Category.html#cat" style="font-size: 16px;
+  font-weight: bold;color:white">Clubs</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-left">
+            <li><a href="./Events.html" style="font-size: 16px;
+  font-weight: bold;color:white">Events</a></li>
+          </ul>
+		</div>
+      </div>
+    </nav>  
+
+ <br>
+ 
+<div class="container-fluid" >
+      <div class="row">
+		 <div class="col-sm-12  col-md-12  main">
+         <div class="row placeholders">
+			
+			<div class="col-sm-12" style="">
+<main style="padding-top:150px" class="bs-docs-masthead" id="content" role="main" >
+  <div >
+  <span id="title"  style="color:#3770B6;text-transform: capitalize" class=" bs-docs-booticon-lg ">
+Loading . . .
+	</span>
+    <p class="lead"></p>
+    <p class="lead">
+      <a  style="padding-left:0px;color:white;background-color:#1A833D;font-family:Helvetica,​Arial,​sans-serif;" class="btn btn-outline-inverse btn-lg" onclick="">Join</a>
+	  <a  style="padding-left:0px;color:white;background-color:#4CB648;font-family:Helvetica,​Arial,​sans-serif;" class="btn btn-outline-inverse btn-lg" onclick="">Follow</a>
+    </p>
+    
+  </div>
+</main>
+			</div>
+			
+			 <div  class=" col-xs-12 col-sm-3 placeholder">
+              <h1 style="color:black;">Description</h1>
+				<div style="color:grey;" id = "Cdesc">
+				
+				
+				</div>
+              
+            </div>
+            <div class="col-xs-12 col-sm-9 placeholder">
+              <h1 style="color:black;">Events</h1>
+			  <div style="color:grey id = "events">
+			  <div class = "table-respnsive">
+				<table class="table table-striped">
+				<thead style="color:black">
+					<tr>
+                  <th>Club Name</th>
+                  <th>Event Name</th>
+                  <th>Description</th>
+                  <th>When</th>
+                  <th>Where</th>
+                </tr>
+				</thead>
+				<tbody style="color:black" id="inputevent">
+				</tbody>
+				
+				</table>
+			</div>
+				
+				</div>
+            </div>
+			<!--<div hidden id="form" class=" col-xs-12 col-sm-3 placeholder">
+              <form style="color:black;">
+					Club Name:<br>
+					<input id="Cname" type="text" style="color:black"required>
+						<br>
+					Event Name:<br>
+				<input  id="Ename" type="text" style="color:black" required>
+				<br>
+				Description:<br>
+				<input id="desc" type="text" style="color:black" required >
+				<br>
+				Time:<br>
+				<input id="time" type="datetime-local" style="color:black" required>
+				<br>
+				<br>
+				<input style="background:grey;" type="submit" value="Add Event" class="btn btn-lg btn-default">
+			</form>
+             
+              
+            </div>-->
+			
+			
+			
+			
+            
+			
+          </div>
+		  </div>
+		</div>
+      </div>
+		  
+		  <datalist id ="autolist">
+
+</datalist>
+	
+<script>
+			var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+			myDataRef.orderByChild("name").on('child_added', function(snapshot) {
+				var tag = snapshot.val();
+				var element = document.getElementById("autolist");
+				element.innerHTML += "<option value="+ tag.name +">"; 
+			});
+
+
+
+</script>
+
+        
+	<div  style="width:100%;background-size:100% 15%;background-repeat: no-repeat; 
+background-color:#3770B6;" class="mastfoot">
+            <div class="inner">
+			
+              		<a href="javascript:void(0)">&copy;Copyright</a> |
+					<a href="javascript:void(0)">Privacy Policy</a>
+            </div>
+          </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./dist/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

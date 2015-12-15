@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Search</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./examples/dash.css" rel="stylesheet">
+	<link href="./examples/cover.css" rel="stylesheet">
+	<link href="./examples/bs.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+	<style>
+	#contact {padding:10px 10px}
+	p {font-size:14pt;font-family:monospace;text-indent:50px;}
+	table, td, th {border: 1px solid black;}
+	.group1 {height:300px}
+	#slide {width:100%}
+</style>
+
+
+
+
+
+<script>
+   var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+			
+	 $(window).on('load', function() {
+					var text = window.location.hash.substring(1);
+					if(text !== "" )
+					{
+					checkcats(text);
+					checkeats(text);
+					}
+		
+		
+		
+		
+		});
+		$(window).on('hashchange', function() {
+					var text = window.location.hash.substring(1);
+					if(text !== "" )
+					{
+					document.location.reload();
+					
+					}
+		
+		
+		
+		
+		});
+
+
+
+function checkcats(tag) {
+$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+  var usersRef = new Firebase('https://antics.firebaseio.com/Clubs');
+  usersRef.once('value', function(snapshot) {
+  $(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+  
+	snapshot.forEach(function(childSnapshot){
+	
+	
+	$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+	
+	var test = childSnapshot.child('name').val();
+	var dest = childSnapshot.child('description').val();
+	if(test !== null)
+	{
+		if(test.indexOf(tag) > -1)
+		{
+			document.getElementById("Clist").innerHTML += "<input type='button' value='"+childSnapshot.val().name+"' style='background-color:#1A833D;padding-top:5px; padding-bottom:5px;width:100%;text-transform:capitalize' class='btn btn-info btn-lg' /><table id='"+childSnapshot.val().name+"' style='display:none'><thead style='color:black'><tr style='background-color:#4CB648'><th>Club Name</th><th>Description</th><th>Category</th></tr></thead><tbody><tr class='willhide' style='background-color:#8FF47A;color:black'><td style='text-transform:capitalize'><a href='./Club.html#"+childSnapshot.val().name+"'>"+ childSnapshot.val().name+"</a></td><td style='text-transform:capitalize'>"+ childSnapshot.val().description+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().category+"</td></tr></tbody></table>";
+
+		}
+		else
+		{
+			if(dest !== null)
+			{
+				if(dest.toLowerCase().indexOf(tag) > -1)
+				{
+					document.getElementById("Clist").innerHTML += "<input type='button' value='"+childSnapshot.val().name+"' style='background-color:#1A833D;padding-top:5px; padding-bottom:5px;width:100%;text-transform:capitalize' class='btn btn-info btn-lg' /><table id='"+childSnapshot.val().name+"' style='display:none'><thead style='color:black'><tr style='background-color:#4CB648'><th>Club Name</th><th>Description</th><th>Category</th></tr></thead><tbody><tr class='willhide' style='background-color:#8FF47A;color:black'><td style='text-transform:capitalize'><a href='./Club.html#"+childSnapshot.val().name+"'>"+ childSnapshot.val().name+"</a></td><td style='text-transform:capitalize'>"+ childSnapshot.val().description+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().category+"</td></tr></tbody></table>";
+
+				}
+				else
+				{
+	
+	
+				}
+			}
+	
+		}
+	}
+	
+	$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+	});
+	$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+
+  });
+}
+
+function checkeats(tag) {
+  var usersRef = new Firebase('https://antics.firebaseio.com/Events');
+  usersRef.once('value', function(snapshot) {
+  $(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+  
+	snapshot.forEach(function(childSnapshot){
+	
+	
+	
+	$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+	var date = childSnapshot.val().when;
+	var b = date.split(/\D+/);
+    var r =  new Date(b[0], --b[1], b[2], b[3], b[4], b[5]||0, b[6]||0);
+	var eventdate = r.toLocaleDateString() + " " + r.toLocaleTimeString();
+	var test = childSnapshot.child('name').val();
+	var eest = childSnapshot.child('eventname').val();
+	var dest = childSnapshot.child('description').val();
+	if(test !== null)
+	{
+		if(test.indexOf(tag) > -1)
+		{
+			document.getElementById("Elist").innerHTML += "<input type='button' value='"+childSnapshot.val().eventname+"' style='background-color:#1A833D;padding-top:5px; padding-bottom:5px;width:100%;text-transform:capitalize' class='btn btn-info btn-lg' /><table id='"+childSnapshot.val().eventname+"' style='display:none'><thead style='color:black'><tr style='background-color:#4CB648'><th>Club Name</th><th>Event Name</th><th>Description</th><th>When</th><th>Where</th></tr></thead><tbody><tr class='willhide' style='background-color:#8FF47A;color:black'><td style='text-transform:capitalize'><a href='./Club.html#"+childSnapshot.val().name+"'>"+ childSnapshot.val().name+"</a></td><td style='text-transform:capitalize'>"+ childSnapshot.val().eventname+"</td><td>"+ childSnapshot.val().description+"</td><td>"+eventdate+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().where+"</td></tr></tbody></table>";
+
+		}
+		else
+		{
+			if(dest !== null)
+			{
+				if(dest.toLowerCase().indexOf(tag) > -1)
+				{
+					document.getElementById("Elist").innerHTML += "<input type='button' value='"+childSnapshot.val().eventname+"' style='background-color:#1A833D;padding-top:5px; padding-bottom:5px;width:100%;text-transform:capitalize' class='btn btn-info btn-lg' /><table id='"+childSnapshot.val().eventname+"' style='display:none'><thead style='color:black'><tr style='background-color:#4CB648><th>Club Name</th><th>Event Name</th><th>Description</th><th>When</th><th>Where</th></tr></thead><tbody><tr class='willhide' style='background-color:#8FF47A; color:black'><td style='text-transform:capitalize'><a href='./Club.html#"+childSnapshot.val().name+"'>"+ childSnapshot.val().name+"</a></td><td style='text-transform:capitalize'>"+ childSnapshot.val().eventname+"</td><td>"+ childSnapshot.val().description+"</td><td>"+eventdate+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().where+"</td></tr></tbody></table>";
+
+				}
+				else
+				{
+					if(eest !== null)
+					{
+						if(eest.indexOf(tag) > -1)
+						{
+							document.getElementById("Elist").innerHTML += "<input type='button' value='"+childSnapshot.val().eventname+"' style='background-color:grey;padding-top:5px; padding-bottom:5px;width:100%;text-transform:capitalize' class='btn btn-info btn-lg' /><table id='"+childSnapshot.val().eventname+"' style='display:none'><thead style='color:black'><tr><th>Club Name</th><th>Event Name</th><th>Description</th><th>When</th><th>Where</th></tr></thead><tbody><tr class='willhide'><td style='text-transform:capitalize'><a href='./Club.html#"+childSnapshot.val().name+"'>"+ childSnapshot.val().name+"</a></td><td style='text-transform:capitalize'>"+ childSnapshot.val().eventname+"</td><td>"+ childSnapshot.val().description+"</td><td>"+eventdate+"</td><td style='text-transform:capitalize'>"+ childSnapshot.val().where+"</td></tr></tbody></table>";
+
+						}
+						else
+						{
+	
+	
+						}
+					}
+	
+				}
+			}
+	
+		}
+	}
+	
+	$(':button').click(function() {
+	if(document.getElementById(($(this).val())) !== null)
+	{
+    if((document.getElementById(($(this).val())).style.display)== "none")
+			{
+			(document.getElementById(($(this).val())).style.display) = "inline";
+			}
+			else
+			{
+			(document.getElementById(($(this).val())).style.display) = "none";
+			}
+			}
+    });
+	});
+	
+
+  });
+}
+
+ 
+  
+  
+  </script>
+
+
+
+  </head>
+
+<body >
+<div id="container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid" style="background-color:#3770B6">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="./Category.html" style="cursor:pointer;cursor:hand;padding-top:5px;" class="navbar-brand" ><img src="./logi.png" alt="logo" height ="40" width = "75" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./Login.html" style="font-size: 16px;font-weight: bold;color:white">Login</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-right">
+            <li><a href="./register.html" style="font-size: 16px;font-weight: bold;color:white">Register</a></li>
+          </ul>
+          <div class="navbar-form navbar-right" >
+			<div class ="form-group">
+            <input autocomplete="on" list="autolist" id="search" type="text" class="form-control" placeholder="Search..."   onkeydown="if (event.keyCode == 13) document.location.href='./search.html#'+document.getElementById('search').value.toLowerCase()">
+			</div>
+          </div>
+
+		  <ul class="nav navbar-nav navbar-left ">
+            <li><a href="./Category.html#cat" style="font-size: 16px;
+  font-weight: bold;color:white">Clubs</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-left">
+            <li><a href="./Events.html" style="font-size: 16px;
+  font-weight: bold;color:white">Events</a></li>
+          </ul>
+		</div>
+      </div>
+    </nav>  
+
+ <br>
+ <div  class="col-sm-12" style="">
+ <div id = "content">
+<div class="container-fluid" >
+      <div class="row">
+		 <div class="col-sm-12  col-md-12  main">
+         <div class="row placeholders">
+		<h1 style="color:#3770B6"> Search Results </h1>	
+		<hr></hr>
+		<hr></hr>
+		<br>
+		<h1 style="color:#3770B6"> CLUBS </h1>
+		
+		<div id = "Clist">
+		</div>
+	
+		<h1 style="color:#3770B6"> EVENTS </h1>
+		
+		<div id = "Elist">
+		</div>
+
+
+		
+			</div>
+			
+			 
+            
+			
+			
+			
+			
+			
+            
+			
+          </div>
+		  </div>
+		</div>
+		</div>
+		</div>
+      </div>
+		  
+		  <datalist id ="autolist">
+
+</datalist>
+	
+<script>
+			var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+			myDataRef.orderByChild("name").on('child_added', function(snapshot) {
+				var tag = snapshot.val();
+				var element = document.getElementById("autolist");
+				element.innerHTML += "<option value="+ tag.name +">"; 
+			});
+
+
+
+</script>
+
+        
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./dist/js/bootstrap.min.js"></script>
+	<div style="width:100%;background-size:100% 15%;background-repeat: no-repeat; 
+background-color:#3770B6;" id="footer">
+            <div class="inner">
+			
+              		<a href="javascript:void(0)">&copy;Copyright</a> |
+					<a href="javascript:void(0)">Privacy Policy</a>
+            </div>
+          </div>
+  </body>
+</html>

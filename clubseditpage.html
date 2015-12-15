@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>clubs edit page</title>
+<script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+	*{margin:0;padding:0;}
+	h1{margin:20px 0px;}
+	h4{margin-top:10px;}
+	input[type=text]{width:600px;}
+	textarea{width:600px;height: 120px;overflow:auto;}
+	form{margin-left:200px;}
+	#tag_bar{float:left; padding: 10px; height:100vh; width: 150px;border-right:1px solid black; overflow:auto;position:fixed;}
+	#tag_list{list-style:none;}
+	li{margin:10px 0px;}
+	input[type=submit]{padding:5px; margin-right:20px;margin-top:10px;}
+</style>
+</head>
+<body>
+	<div id="tag_bar">
+		<input type="submit" value="Add New" onclick="newTag()"/>
+		<ul id = "tag_list">
+		</ul>
+		<br>
+		<br>
+	</div>
+	<form>
+		<h1>Enter Data Here:</h1>
+		<h4>Club Name:</h4> <input type='text' id='nameInput' placeholder='Name'>
+		<h4>Description:</h4> <textarea id='descriptionInput' placeholder='Description'></textarea>
+		<h4>Category</h4> <textarea id='categoryInput' placeholder='Category'></textarea>
+		<br/>
+		<input type="submit" value="Submit" onclick="submitTag()"/>
+		<input type="submit" value="Delete" onclick="deleteTag()"/>
+	</form>
+    <script>
+		var myDataRef = new Firebase('https://antics.firebaseio.com/Clubs');
+		var currentTag = "Untitled Tag";
+		
+		function submitTag(){
+			var entry = myDataRef.child($('#nameInput').val().toLowerCase().trim());
+			var name = $('#nameInput').val().toLowerCase().trim();
+			var description = $('#descriptionInput').val();
+			var category = $('#categoryInput').val().toLowerCase().trim();
+			currentTag= name;
+			entry.set({name: name, description: description,category: category});
+			alert("Your data has been successfully added for " + name);
+		};
+	  
+		myDataRef.orderByChild("name").on('child_added', function(snapshot) {
+			var tag = snapshot.val();
+			displayList(tag.name);
+		});
+		myDataRef.orderByChild("name").on('child_removed', function(snapshot) {
+			var tag = snapshot.val();
+			updateList(tag.name);
+		});
+		function displayList(name) {
+			var element = document.getElementById("tag_list");
+			element.innerHTML += "<li><a href=\"#" + name + "\">" + name + "</a></li>"; 
+		};
+		function updateList(name){
+			var element = document.getElementById("tag_list");
+			element.innerHTML="";
+			myDataRef.once("value", function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					var tag = childSnapshot.val();
+					element.innerHTML += "<li><a href=\"#" + tag.name + "\">" + tag.name + "</a></li>"; 
+				});
+			}); 
+		};
+	  
+		$(window).on('load', function() {
+			var tag = window.location.hash.substr(1);
+			myDataRef.child(tag).on("value", function(snapshot) {
+				tag = snapshot.val();
+				currentTag = tag.name;
+				$('#nameInput').val(tag.name);
+				$('#descriptionInput').val(tag.description);
+				$('#categoryInput').val(tag.category);
+			});
+		});
+		
+		$(window).on('hashchange', function() {
+			var tag = window.location.hash.substr(1);
+			myDataRef.child(tag).on("value", function(snapshot) {
+				tag = snapshot.val();
+				currentTag = tag.name;
+				$('#nameInput').val(tag.name);
+				$('#descriptionInput').val(tag.description);
+				$('#categoryInput').val(tag.category);
+			});
+		});
+		
+		function deleteTag() {
+			if (confirm("Are you sure you want to delete data for " + currentTag + "?")) {
+				var deleteRef = new Firebase('https://antics.firebaseio.com/Clubs/' + encodeURIComponent(currentTag.trim()));
+				deleteRef.remove();
+				$('#nameInput').val("");
+				$('textarea').val("");
+				$('#categoryInput').val("");
+				alert("Your data has been successfully deleted for " + currentTag);
+				currentTag = "Untitled Tag";
+			}
+		};
+	  
+		function newTag(){
+			if ((!($('input[type=text]').val() == "" && $('textarea').val() == "")
+				|| currentTag != "Untitled Tag")
+				&& confirm("Warning: adding a new tag will overwrite any unsaved changes to the current tag. Proceed anyways?")) {
+				currentTag="Untitled Tag";
+				$('input[type=text]').val("");
+				$('textarea').val("");
+			}
+		};
+		
+    </script>
+</body>
+</html>
